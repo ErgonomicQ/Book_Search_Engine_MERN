@@ -1,5 +1,5 @@
-const {User} = require ('./models');
-const { signToken } = require ('/auth');
+const { User } = require ('../models');
+const { signToken } = require ('../utils/auth');
 
 
 const resolvers = {
