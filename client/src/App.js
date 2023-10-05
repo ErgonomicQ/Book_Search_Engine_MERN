@@ -1,13 +1,39 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import {ApolloProvider, ApolloClient, InMemoryCache,} from '@apollo/client'
+import { setContext } from '@apollo/client/link/context';
+import {ApolloProvider, ApolloClient, InMemoryCache, createHttpLink} from '@apollo/client'
 import SearchBooks from './pages/SearchBooks';
 import SavedBooks from './pages/SavedBooks';
 import Navbar from './components/Navbar';
 
+const httpLinkup = createHttpLink({
+  url: '/graphql'
+});
+
+// Retrieve the user token from localStorage
+const token = localStorage.getItem('id_token');
+
+// Create a new Apollo Client link using the setContext function
+const auth = setContext((_, { headers }) => {
+  // Check if a token exists in localStorage
+  if (token) {
+    // If a token is found, add it to the authorization header with the 'Bearer' prefix
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` :'' // 'Bearer' prefix is added to the token if it exists
+      },
+    };
+  } else {
+    // If no token is found, return the headers without any modification
+    return {
+      headers,
+    };
+  }
+});
 
 const client = new ApolloClient({
-  uri: '/graphql', 
+ link: auth.concat(httpLinkup), 
   cache: new InMemoryCache(),
 });
 
