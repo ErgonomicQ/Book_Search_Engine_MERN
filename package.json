@@ -2,7 +2,7 @@
   "name": "googlebooks-app",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://ergonomicq.github.io/googlebooks-app",  
+  "homepage": "https://ergonomicq.github.io/Book_Search_Engine_MERN/",  
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
