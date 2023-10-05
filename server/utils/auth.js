@@ -12,7 +12,7 @@ module.exports = {
     }
 
     if (!token) {
-      return null;
+      return {user: null};
     }
 
     try {
